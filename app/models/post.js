@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const dynamoose = require("dynamoose");
 
-const postSchema = new mongoose.Schema({
+const postSchema = new dynamoose.Schema({
 	username: {
 		type: String,
 		lowercase: true,
@@ -13,4 +13,4 @@ const postSchema = new mongoose.Schema({
 	content: { type: String, required: [ true, "can't be blank" ] }
 });
 
-module.exports = mongoose.model("Post", postSchema);
+module.exports = dynamoose.model("Post", postSchema);

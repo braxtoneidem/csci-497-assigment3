@@ -8,8 +8,17 @@ const fs = require('fs');
 
 const dynamoose = require("dynamoose");
 
+/*
+// Create new DynamoDB instance
+const ddb = new dynamoose.aws.ddb.DynamoDB({
+    "accessKeyId": "AKID",
+    "secretAccessKey": "SECRET",
+    "region": "us-west-2"
+});
 
-
+// Set DynamoDB instance to the Dynamoose DDB instance
+dynamoose.aws.ddb.set(ddb);
+*/
 
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
