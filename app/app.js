@@ -7,18 +7,16 @@ const https= require("https");
 const fs = require('fs');
 
 const dynamoose = require("dynamoose");
-
 /*
-// Create new DynamoDB instance
-const ddb = new dynamoose.aws.ddb.DynamoDB({
-    "accessKeyId": "AKID",
-    "secretAccessKey": "SECRET",
-    "region": "us-west-2"
-});
+assignment3 iam access key
 
-// Set DynamoDB instance to the Dynamoose DDB instance
-dynamoose.aws.ddb.set(ddb);
+AKIAWPUZBM5BNDVCLUU7
+K2C1s3mLKwtSr0CBZRIN7QV3drRd65vw+lnmWwg5
 */
+
+
+
+
 
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -26,6 +24,15 @@ const session = require('express-session');
 const passport = require('passport');
 const MongoStore = require('connect-mongo');
 const mongoSanitize = require('express-mongo-sanitize');
+
+
+const AWS = require('aws-sdk');
+const DynamoDBStore = require('connect-dynamodb')(session);
+// AWS.config.update({
+// 	region: 'us-west-2',
+// 	endpoint: 'http://localhost:3000/' //the endpoint needs to be replaced with the real DynamoDB endpoint when done using localhost
+//   })
+
 
 
 const User = require("./models/user");
@@ -47,7 +54,7 @@ app.use(express.static('public'));
   
 app.set('trust proxy', 1); // trust first proxy
 
-const port = config.get('port') || 3000;
+const port = 8000;//config.get('port') || 3000;
 const blogDB = config.get('db.name')
 
 const blog_db_url =
@@ -75,8 +82,48 @@ app.use(
 		cookie: { secure: 'auto' }
 	})
 );
+/*
+// Create new DynamoDB instance
+const ddb = new dynamoose.aws.ddb.DynamoDB({
+    "accessKeyId": "AKIAWPUZBM5BNDVCLUU7",
+    "secretAccessKey": "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",
+    "region": "us-west-2"
+});
+
+// Set DynamoDB instance to the Dynamoose DDB instance
+dynamoose.aws.ddb.set(ddb);
+*/
 
 
+const options = {   
+    table: 'assignment3',   
+
+    AWSConfigJSON: {
+            // accessKeyId: process.env.ACCESSKEYID,
+            // secretAccessKey: process.env.SECRETACCESSKEY,
+			accessKeyId: 'AKIAWPUZBM5BNDVCLUU7',
+			secretAccessKey: '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',
+            region: 'us-west-2'
+    }
+}
+
+app.use(session({
+    genid: (req) => {
+        return uuidv4() // use UUIDs for session IDs
+    },
+        cookie: {
+         secure: true
+},
+    store: new DynamoDBStore(options), 
+    secret: 'secret',
+    resave: false,
+    cookie: {
+        maxAge: 5*60*1000, //set to 5 min 
+    },
+    saveUninitialized: false,
+    name: '_id',
+    rolling: true
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -106,10 +153,8 @@ app.all('*', function(req, res) {
   res.redirect("/post/about");
 });
 
-const server = https.createServer({
-	key: fs.readFileSync('server.key'),
-	cert: fs.readFileSync('server.cert')
-}, app).listen(port,() => {
+const http = require('http');
+const server = http.createServer(app).listen(port,() => {
 console.log('Listening ...Server started on port ' + port);
 })
 

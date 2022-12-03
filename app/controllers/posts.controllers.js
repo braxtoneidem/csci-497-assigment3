@@ -1,6 +1,5 @@
 const Post = require("../models/post");
 
-
 const homeStartingContent =
 	'The home pages lists all the blogs from all the users.';
 
@@ -15,7 +14,40 @@ const composePost = (req, res) => {
 	res.redirect('/post');
 };
 
-/*
+
+
+
+
+// const displayAllPosts = (req, res) => {
+// 	Post.query().exec((err, posts) => { // if not {}: Post.query('posts').exec((err, posts) {  //'posts' being the hashkey of the table 
+// 		res.render('home', {
+// 			startingContent: homeStartingContent,
+// 			posts: posts
+// 		});
+// 	});
+// };
+
+
+// async function displayPost (req, res)  {
+// 	const requestedPostId = req.params.postId;
+
+// 	Post.query("postId").eq(requestedPostId).exec((err, post) => { // Post.query("postId").eq(requestedPostId).exec((err, post))
+// 		res.render('post', {
+// 			title: post.title,
+// 			content: post.content
+// 		});
+// 	});
+// };
+
+
+
+
+
+
+/***********************************   mongo  *******************************************/
+
+
+
 const displayAllPosts = (req, res) => {
 	Post.find({}, function(err, posts) {
 		res.render('home', {
@@ -24,19 +56,17 @@ const displayAllPosts = (req, res) => {
 		});
 	});
 };
-*/
 
-const displayAllPosts = (req, res) => {
-	Post.query({}).exec((err, posts) => { // if not {}: Post.query('posts').exec((err, posts) {  //'posts' being the hashkey of the table 
-		res.render('home', {
-			startingContent: homeStartingContent,
-			posts: posts
-		});
-	});
-};
 
-/*
+
+
 async function displayPost (req, res)  {
+	
+
+	console.log('printing res/req');
+	console.log(res.body);
+	console.log(req.params.postId);
+	
 	const requestedPostId = req.params.postId;
 
 	Post.findOne({ _id: requestedPostId }, function(err, post) {
@@ -46,18 +76,9 @@ async function displayPost (req, res)  {
 		});
 	});
 };
-*/
 
-async function displayPost (req, res)  {
-	const requestedPostId = req.params.postId;
 
-	Post.query("postId").eq(requestedPostId).exec((err, post) => { // Post.query("postId").eq(requestedPostId).exec((err, post))
-		res.render('post', {
-			title: post.title,
-			content: post.content
-		});
-	});
-};
+
 
 module.exports = {
 	displayAllPosts,
