@@ -79,6 +79,7 @@ var config = convict({
     env: 'TEST_PASSWORD'
   }
   
+  
 });
 
 // Load environment dependent configuration
@@ -89,3 +90,15 @@ config.loadFile('./config/' + env + '.json');
 config.validate({allowed: 'strict'});
 
 module.exports = config;
+
+// module.exports = {
+//   aws_table_name: 'assignment3',
+//   aws_local_config: {
+//     //Provide details for local configuration
+//   },
+//   aws_remote_config: {
+//     accessKeyId: 'AKIAWPUZBM5BNDVCLUU7',
+//     secretAccessKey: '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',
+//     region: 'us-west-2',
+//   }
+// };

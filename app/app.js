@@ -6,7 +6,6 @@ const helmet = require('helmet');
 const https= require("https");
 const fs = require('fs');
 
-const dynamoose = require("dynamoose");
 /*
 assignment3 iam access key
 
@@ -14,6 +13,29 @@ AKIAWPUZBM5BNDVCLUU7
 K2C1s3mLKwtSr0CBZRIN7QV3drRd65vw+lnmWwg5
 */
 
+// const DynamoDBClient = require("@aws-sdk/client-dynamodb");
+// //import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+// const REGION = "us-west-2"; //e.g. "us-east-1"
+// const ddbClient = new DynamoDBClient({ region: REGION });
+
+// const PutItemCommand = require("@aws-sdk/client-dynamodb");
+// //import { PutItemCommand } from "@aws-sdk/client-dynamodb";
+
+// const params = {
+//     TableName: "assignment3",
+//     Item: {
+//       _id: { S: "-1" },
+//       username: { S: "-1" },
+//       title: { S: "-1" },
+//       content: { S: "-1"},
+//     },
+//   };
+
+//    try {
+//     ddbClient.send(new PutItemCommand(params));
+//   } catch (err) {
+//     console.error(err);
+//   }
 
 
 
@@ -26,12 +48,7 @@ const MongoStore = require('connect-mongo');
 const mongoSanitize = require('express-mongo-sanitize');
 
 
-const AWS = require('aws-sdk');
-const DynamoDBStore = require('connect-dynamodb')(session);
-// AWS.config.update({
-// 	region: 'us-west-2',
-// 	endpoint: 'http://localhost:3000/' //the endpoint needs to be replaced with the real DynamoDB endpoint when done using localhost
-//   })
+
 
 
 
@@ -82,48 +99,27 @@ app.use(
 		cookie: { secure: 'auto' }
 	})
 );
-/*
-// Create new DynamoDB instance
-const ddb = new dynamoose.aws.ddb.DynamoDB({
-    "accessKeyId": "AKIAWPUZBM5BNDVCLUU7",
-    "secretAccessKey": "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",
-    "region": "us-west-2"
-});
-
-// Set DynamoDB instance to the Dynamoose DDB instance
-dynamoose.aws.ddb.set(ddb);
-*/
 
 
-const options = {   
-    table: 'assignment3',   
 
-    AWSConfigJSON: {
-            // accessKeyId: process.env.ACCESSKEYID,
-            // secretAccessKey: process.env.SECRETACCESSKEY,
-			accessKeyId: 'AKIAWPUZBM5BNDVCLUU7',
-			secretAccessKey: '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',
-            region: 'us-west-2'
-    }
-}
 
-app.use(session({
-    genid: (req) => {
-        return uuidv4() // use UUIDs for session IDs
-    },
-        cookie: {
-         secure: true
-},
-    store: new DynamoDBStore(options), 
-    secret: 'secret',
-    resave: false,
-    cookie: {
-        maxAge: 5*60*1000, //set to 5 min 
-    },
-    saveUninitialized: false,
-    name: '_id',
-    rolling: true
-}));
+
+
+
+
+/************ D D B ***********************/
+
+
+/************ D D B ***********************/
+
+
+
+
+
+/************ D D B ***********************/
+
+
+
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -146,7 +142,6 @@ app.use(function(req, res, next) {
 });
 
 app.use('/user', userRouter);
-
 app.use('/post', postRouter);
 
 app.all('*', function(req, res) {
