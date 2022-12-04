@@ -108,7 +108,7 @@ const homeStartingContent =
 
 
 
-var count = 0;
+var count = 1;
 
 const composePost = (req, res) => {
 
@@ -130,7 +130,7 @@ const composePost = (req, res) => {
 			'username':req.user.username,
 			'title': req.body.postTitle,
 			'content': req.body.postBody,
-			'postTag':'0'
+			'postTag': 0
 		}
   	};
 
@@ -141,7 +141,7 @@ const composePost = (req, res) => {
 		if (err) {
 		  console.log("Error", err);
 		} else {
-		  console.log("Success", data);
+		//   console.log("Success", data);
 		}
 	  });
 
@@ -163,34 +163,38 @@ const composePost = (req, res) => {
 
 
 const displayAllPosts = (req, res) => {
-	
-	var params = {
-		TableName: 'assignment3-v2',
-		Key: {
-			'_id': ''+req.params.postId,
-		}
-	  };
-	  
-	  docClient.get(params, function(err, data) {
-		if (err) {
-		  console.log("Error", err);
-		} else {
-		  console.log("Success", data.Item);
-
-		  res.render('post', {
-			title: data.Item.title,
-			content: data.Item.content
-		});
-		}})
 
 
-	// Post.find({}, function(err, posts) {
-	// 	// res.render('home', {
-	// 	// 	startingContent: homeStartingContent,
-	// 	// 	posts: posts
-	// 	// });
-	// });
+    var posts = [];
+
+    for(var i=0; i < count; i++){
+            var params = {
+                TableName: 'assignment3-v2',
+                Key: {
+                    '_id': ''+i,
+                }
+            };
+
+            docClient.get(params, function(err, data) {
+                if (err) {
+                    console.log("Error", err);
+                } else {
+                    console.log("Success", data.Item);
+                    posts.push(data.Item);
+                }})
+
+        }//end of for loop
+
+        setTimeout(() => {
+            console.log('waited for 5 seconds')
+            console.log("test", posts);
+                    res.render('home', {
+                        startingContent: homeStartingContent,
+                        posts: posts
+                    });
+        }, 5000)
 };
+
 
 
 
@@ -208,7 +212,7 @@ async function displayPost (req, res)  {
 		if (err) {
 		  console.log("Error", err);
 		} else {
-		  console.log("Success", data.Item);
+		//   console.log("Success", data.Item);
 
 		  res.render('post', {
 			title: data.Item.title,
