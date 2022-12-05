@@ -1,5 +1,4 @@
 const Post = require("../models/post");
-var Schema = require("../models/postDDB.js");
 const config = require('../config/config');
 require('dotenv').config();
 
