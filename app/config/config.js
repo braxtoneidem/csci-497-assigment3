@@ -77,8 +77,7 @@ var config = convict({
     default: '',
     sensitive: true,
     env: 'TEST_PASSWORD'
-  }
-  
+  }  
   
 });
 

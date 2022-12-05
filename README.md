@@ -1,11 +1,11 @@
 # csci-497-assigment3
 
-# GROUP MEMBERS
+# GROUP 5 MEMBERS
 Braxton Eidem
 Frank Robinson
 
 # LINK TO ALB
-http://assignment3-1111578728.us-west-2.elb.amazonaws.com/
+https://assignment3-1111578728.us-west-2.elb.amazonaws.com:443/
 
 # CHALLENGES
 By far our biggest challenge was storing posts using DynamoDB. It took us quite a while to figure out how to connect to our DynamoDB table alongside our MongoDB connection. We spent hours trying to use dynamoose: we thought it would be easier since the app was previously using mongoose, and dynamoose is meant to sort of mimick mongoose features. However, we could not find proper examples of  dynamoose being used to suit our needs, so instead we moved to using aws-sdk functions. We used the aws DynamoDB node.js tutorials consistently for referencing how to read and write to our table.

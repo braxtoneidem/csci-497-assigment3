@@ -6,39 +6,6 @@ const helmet = require('helmet');
 const https= require("https");
 const fs = require('fs');
 
-/*
-assignment3 iam access key
-
-AKIAWPUZBM5BNDVCLUU7
-K2C1s3mLKwtSr0CBZRIN7QV3drRd65vw+lnmWwg5
-*/
-
-// const DynamoDBClient = require("@aws-sdk/client-dynamodb");
-// //import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-// const REGION = "us-west-2"; //e.g. "us-east-1"
-// const ddbClient = new DynamoDBClient({ region: REGION });
-
-// const PutItemCommand = require("@aws-sdk/client-dynamodb");
-// //import { PutItemCommand } from "@aws-sdk/client-dynamodb";
-
-// const params = {
-//     TableName: "assignment3",
-//     Item: {
-//       _id: { S: "-1" },
-//       username: { S: "-1" },
-//       title: { S: "-1" },
-//       content: { S: "-1"},
-//     },
-//   };
-
-//    try {
-//     ddbClient.send(new PutItemCommand(params));
-//   } catch (err) {
-//     console.error(err);
-//   }
-
-
-
 
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -46,10 +13,6 @@ const session = require('express-session');
 const passport = require('passport');
 const MongoStore = require('connect-mongo');
 const mongoSanitize = require('express-mongo-sanitize');
-
-
-
-
 
 
 const User = require("./models/user");
@@ -71,7 +34,7 @@ app.use(express.static('public'));
   
 app.set('trust proxy', 1); // trust first proxy
 
-const port = 8000;//config.get('port') || 3000;
+const port = 3000;//config.get('port') || 3000;
 const blogDB = config.get('db.name')
 
 const blog_db_url =
@@ -99,25 +62,6 @@ app.use(
 		cookie: { secure: 'auto' }
 	})
 );
-
-
-
-
-
-
-
-
-/************ D D B ***********************/
-
-
-/************ D D B ***********************/
-
-
-
-
-
-/************ D D B ***********************/
-
 
 
 
