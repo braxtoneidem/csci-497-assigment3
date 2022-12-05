@@ -35,12 +35,12 @@ app.use(express.static('public'));
 app.set('trust proxy', 1); // trust first proxy
 
 const port = 3000;//config.get('port') || 3000;
-const blogDB = config.get('db.name')
+const blogDB = process.env.DB_NAME
 
 const blog_db_url =
-	config.get('db.db_url') +
-	config.get('db.password') +
-	config.get('db.host') +
+	process.env.DB_URL +
+	process.env.MON_PASS +
+	process.env.DB_HOST +
 	blogDB +
 	'?retryWrites=true&w=majority';
 
@@ -52,7 +52,7 @@ const dbConnection = mongoose.connect(blog_db_url, (err) => {
 
 app.use(
 	session({
-		secret: config.get('secret'),
+		secret: process.env.SESSION_SECRET,
 		resave: false,
     store: MongoStore.create({
       mongoUrl: blog_db_url,
